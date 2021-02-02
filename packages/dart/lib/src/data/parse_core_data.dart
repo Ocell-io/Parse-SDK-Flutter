@@ -36,7 +36,8 @@ class ParseCoreData {
     ParseConnectivityProvider connectivityProvider,
     String fileDirectory,
     Stream<void> appResumedStream,
-  }) async {
+      bool allowCustomObjectId
+      }) async {
     _instance = ParseCoreData._init(appId, serverUrl);
 
     _instance.storage ??= store ?? CoreStoreMemoryImp();
@@ -98,8 +99,11 @@ class ParseCoreData {
     if (appResumedStream != null) {
       _instance.appResumedStream = appResumedStream;
     }
-  }
 
+    if (allowCustomObjectId != null) {
+      _instance.allowCustomObjectId = allowCustomObjectId;
+    }
+  }
   String appName;
   String appVersion;
   String appPackageName;
@@ -119,6 +123,7 @@ class ParseCoreData {
   ParseConnectivityProvider connectivityProvider;
   String fileDirectory;
   Stream<void> appResumedStream;
+  bool allowCustomObjectId;
 
   void registerSubClass(
       String className, ParseObjectConstructor objectConstructor) {

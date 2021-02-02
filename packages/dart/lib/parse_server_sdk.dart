@@ -103,6 +103,7 @@ class Parse {
     ParseConnectivityProvider connectivityProvider,
     String fileDirectory,
     Stream<void> appResumedStream,
+    bool allowCustomObjectId = false,
   }) async {
     final String url = removeTrailingSlash(serverUrl);
 
@@ -128,6 +129,7 @@ class Parse {
       connectivityProvider: connectivityProvider,
       fileDirectory: fileDirectory,
       appResumedStream: appResumedStream,
+      allowCustomObjectId:allowCustomObjectId
     );
 
     _hasBeenInitialized = true;

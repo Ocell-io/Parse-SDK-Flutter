@@ -15,6 +15,7 @@ class ParseObject extends ParseBase implements ParseCloneable {
     _aggregatepath = '$keyEndPointAggregate$className';
 
     _debug = isDebugEnabled(objectLevelDebug: debug);
+    _allowCustomObjectId = ParseCoreData().allowCustomObjectId ?? false;
     _client = client ??
         ParseHTTPClient(
             sendSessionId:
@@ -31,6 +32,7 @@ class ParseObject extends ParseBase implements ParseCloneable {
   String _path;
   String _aggregatepath;
   bool _debug;
+  bool _allowCustomObjectId;
   ParseHTTPClient _client;
 
   /// Gets an object from the server using it's [String] objectId
@@ -68,8 +70,8 @@ class ParseObject extends ParseBase implements ParseCloneable {
   Future<ParseResponse> create() async {
     try {
       final Uri url = getSanitisedUri(_client, '$_path');
-      final String body =
-          json.encode(toJson(forApiRQ: true, keepObjectId: true));
+      final String body = json
+          .encode(toJson(forApiRQ: true, keepObjectId: _allowCustomObjectId));
       _saveChanges();
       final Response result =
           await _client.post<String>(url.toString(), data: body);
