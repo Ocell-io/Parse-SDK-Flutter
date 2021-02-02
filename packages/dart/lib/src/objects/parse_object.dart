@@ -68,7 +68,8 @@ class ParseObject extends ParseBase implements ParseCloneable {
   Future<ParseResponse> create() async {
     try {
       final Uri url = getSanitisedUri(_client, '$_path');
-      final String body = json.encode(toJson(forApiRQ: true));
+      final String body =
+          json.encode(toJson(forApiRQ: true, keepObjectId: true));
       _saveChanges();
       final Response result =
           await _client.post<String>(url.toString(), data: body);
@@ -555,7 +556,7 @@ class ParseObject extends ParseBase implements ParseCloneable {
       id ??= objectId;
       final Uri url = getSanitisedUri(_client, '$_path/$id');
       final Response<String> result =
-      await _client.delete<String>(url.toString());
+          await _client.delete<String>(url.toString());
       return handleResponse<T>(
           this, result, ParseApiRQ.delete, _debug, parseClassName);
     } on Exception catch (e) {
